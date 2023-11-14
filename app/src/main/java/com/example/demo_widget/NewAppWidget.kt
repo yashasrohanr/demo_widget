@@ -22,7 +22,7 @@ class NewAppWidget : AppWidgetProvider() {
     ) {
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget2(context, appWidgetManager, appWidgetId)
+            //updateAppWidget2(context, appWidgetManager, appWidgetId)
         }
     }
     override fun onDisabled(context: Context) {
@@ -57,18 +57,4 @@ class NewAppWidget : AppWidgetProvider() {
     }
 }
 
-internal fun updateAppWidget(
-    context: Context,
-    appWidgetManager: AppWidgetManager,
-    appWidgetId: Int
-) {
-    val widgetText1 = context.getString(R.string.appwidget_text)
-    val widgetText2 = context.getString(R.string.appwidget_text2)
-    // Construct the RemoteViews object
-    val views = RemoteViews(context.packageName, R.layout.new_app_widget)
-    views.setTextViewText(R.id.appwidget_text_title, widgetText1)
-    views.setTextViewText(R.id.appwidget_text_body, appWidgetId.toString())
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, views)
-}
 
