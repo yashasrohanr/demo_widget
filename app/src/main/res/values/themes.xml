@@ -20,5 +20,6 @@
     <style name="Theme.Demo_widget.AppWidgetContainer" parent="Theme.Demo_widget.AppWidgetContainerParent">
         <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
         <item name="appWidgetPadding">16dp</item>
+        <item name = "backgroundColor">@color/cardview_light_background</item>
     </style>
 </resources>

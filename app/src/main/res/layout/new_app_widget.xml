@@ -5,15 +5,32 @@
     android:theme="@style/Theme.Demo_widget.AppWidgetContainer">
 
     <TextView
-        android:id="@+id/appwidget_text"
+        android:id="@+id/appwidget_text_title"
         style="@style/Widget.Demo_widget.AppWidget.InnerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold|italic" />
+    <TextView
+        android:id="@+id/appwidget_text_body"
+        style="@style/Widget.Demo_widget.AppWidget.InnerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/appwidget_text_title"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/appwidget_text2"
+        android:text="@string/appwidget_text2"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:textStyle="italic" />
 </RelativeLayout>
