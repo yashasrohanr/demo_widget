@@ -1,26 +1,42 @@
+package com.example.demo_widget
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
-import com.example.demo_widget.MainActivity
-import com.example.demo_widget.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlin.random.Random
 
-class ForegroundService : Service() {
+class MyService : Service() {
+
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
-
+    private var count = 0
+    private val LOGTAG = "widget_manager"
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(LOGTAG, "onCreate for service")
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d(LOGTAG, "started foreground service, count = $count")
         createNotificationChannel()
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
@@ -35,7 +51,8 @@ class ForegroundService : Service() {
         // Update widget every second
         serviceScope.launch {
             while (isActive) {
-                delay(1000L)
+                delay(100L)
+                Log.d(LOGTAG, "from servce before updateWidget method, count = $count")
                 updateWidget()
             }
         }
@@ -50,6 +67,15 @@ class ForegroundService : Service() {
 
     private fun updateWidget() {
         // Update your widget here
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val remoteViews = RemoteViews(packageName, R.layout.new_app_widget)
+        val componentName = ComponentName(this, NewAppWidget::class.java)
+
+        var text =  Random.nextInt(1,20).toString()
+
+        remoteViews.setTextViewText(R.id.appwidget_text_body, text)
+        appWidgetManager.updateAppWidget(componentName, remoteViews)
+        count++
     }
 
     private fun createNotificationChannel() {
